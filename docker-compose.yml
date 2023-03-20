@@ -2,33 +2,57 @@ version: '3.1'
 
 services:
   apache:
-    image: apache2
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: apache2
     restart: always
     volumes:
         - ./app:/var/www/html
     ports:
-        - 8180:80  
+        - 8180:80 
+    networks:
+      - bonice 
   php:
-    image: php:latest
-    container_name: php1
-  
+    build:
+      context: .
+      dockerfile: php2-dockerfile
+    container_name: php2
+    restart: always
+    volumes:
+         - ./app-php:/var/www/html 
+    ports:
+      - 6000-7000:80  
+    networks:
+      - bonice
   db:
     image: mariadb 
     container_name: mariadb
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: example
+    networks:
+      - bonice
 
   adminer:
     image: adminer
+    container_name: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - bonice
   
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: phpmyadmin1
     ports:
       - "6000-7000:85"
+    networks:
+      - bonice
 
+networks:
+  bonice:
+    driver: bridge
+    
+    

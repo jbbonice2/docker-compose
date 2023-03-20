@@ -1,0 +1,22 @@
+FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
+
+WORKDIR app
+RUN apt-get update && apt-get install -y \
+php7.4 \
+libapache2-mod-php7.4 \
+php7.4-mysql \
+php7.4-common \
+php7.4-cli \
+php7.4-json \
+php7.4-opcache \
+php7.4-xml \
+php7.4-mbstring \
+php7.4-cli \
+php7.4-zip
+ 
+RUN  a2enmod php7.4
+EXPOSE 80
+
+CMD ["/usr/sbin/apache2ctl","-DFOREGROUND"]
+
