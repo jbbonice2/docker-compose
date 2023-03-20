@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  apache:
+    image: apache2
+    container_name: apache2
+    restart: always
+    volumes:
+        - ./app:/var/www/html
+    ports:
+        - 8180:80  
+  php:
+    image: php:latest
+    container_name: php1
+  
+  db:
+    image: mariadb 
+    container_name: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin1
+    ports:
+      - "6000-7000:85"
+
