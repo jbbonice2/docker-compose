@@ -28,12 +28,13 @@ services:
   db:
     image: mariadb 
     container_name: mariadb
-    restart: always
     environment:
       MARIADB_ROOT_PASSWORD: example
     networks:
       - bonice
-
+    volumes:
+      - voldb:/var/lib/mysql
+    restart: always
   adminer:
     image: adminer
     container_name: adminer
@@ -51,8 +52,13 @@ services:
     networks:
       - bonice
 
+
 networks:
   bonice:
     driver: bridge
     
+volumes:
+  voldb:    
+
+
     
